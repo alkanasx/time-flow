@@ -1,24 +1,23 @@
-<!DOCTYPE html>//告诉浏览器这是一个html5文档
-<html lang="zh">//根标签+页面内容是中文
-<head>//头部放配置信息
-    <meta charset="UTF-8">//字符编码保证不乱码
-    <title>My TimeFlow</title>//浏览器上的标题
-    <style>/*css样式*/
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>My TimeFlow</title>
+    <style>
         * {
-            margin: 0;//外边距
-            padding: 0;//内边距
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: sans-serif;//字体：无衬线体
-            background: white;//背景：白色
-            padding: 20px;//页面四周留20px的空隙
-        }
+            font-family: sans-serif;
+            background: white;
+            padding: 20px;
 
-        .container {//容器样式
-            max-width: 600px;//最宽600px
-            margin: 0 auto;//自动居中
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         h1 {
@@ -51,39 +50,39 @@
         .task {
             background: white;
             padding: 15px;
-            margin-bottom: 10px;//卡片之间间距10px
-            border-radius: 6px;//圆角6px
-            display: flex;//弹性布局
-            align-items: center;//子元素垂直居中
-            gap: 10px;//子元素间距10px
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
 
         .task.completed {
-            opacity: 0.5;//已完成的任务半透明
+            opacity: 0.5;
         }
 
         .task .title {
-            flex: 1;//标题占满剩余空间
+            flex: 1;
         }
 
         .task.completed .title {
-            text-decoration: line-through;//已完成的任务加删除线
+            text-decoration: line-through;
         }
 
-        .task button {//按钮通用样式
+        .task button {
             padding: 6px 12px;
-            border: none;//去掉默认边框
-            border-radius: 4px;//圆角
-            cursor: pointer;//鼠标放上去变成手型
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
-        .btn-done {//完成按钮蓝色
+        .btn-done {
             background: #2196F3;
             color: white;
         }
 
-        .btn-delete {//删除按钮红色
+        .btn-delete {
             background: #f44336;
             color: white;
         }
@@ -137,30 +136,27 @@
 </div>
 
 <script>
-    // 页面加载时获取所有任务，一打开就调用loadTasks
-    //javascript从上往下执行
     loadTasks();
 
     function loadTasks() {
-        fetch('/api/tasks')//发送get请求到/api/tasks
-            .then(res => res.json())//把后端返回的json转成javascirpt
-            .then(tasks => {//拿到任务数组后开始处理
-                // 按计划时间排序，没时间的排最后
+        fetch('/api/tasks')
+            .then(res => res.json())
+            .then(tasks => {
                 tasks.sort((a, b) => {
                     if (!a.plannedAt) return 1;
                     if (!b.plannedAt) return -1;
                     return new Date(a.plannedAt) - new Date(b.plannedAt);
                 });
 
-                let html = '';//准备空字符串，连接html
+                let html = '';
 
                 for (let task of tasks) {
-                    let doneClass = task.completed ? 'completed' : '';//任务完成类名显示completed，对应completed的代码或者为空
+                    let doneClass = task.completed ? 'completed' : '';
                     let doneText = task.completed ? '撤销' : '完成';
 
                     let timeRange = '';
                     if (task.plannedAt) {
-                        let start = task.plannedAt.substring(11, 16);// 只显示时:分
+                        let start = task.plannedAt.substring(11, 16);
                         if (task.plannedEnd) {
                             let end = task.plannedEnd.substring(11, 16);
                             timeRange = `<span class="time-range">${start} - ${end}</span>`;
@@ -169,7 +165,7 @@
                         }
                     }
 
-                    // 详细信息
+
                     let detailsHtml = '';
                     if (task.plannedAt) {
                         detailsHtml += `<div>开始时间：${task.plannedAt}</div>`;
