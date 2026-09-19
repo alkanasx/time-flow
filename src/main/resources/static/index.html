@@ -121,16 +121,16 @@
     </style>
 </head>
 
-<body>//页面主体
-<div class="container">//一个容器+在css里控制样式
+<body>
+<div class="container">
 
-    <h1>TimeFlow</h1>//一级标题
+    <h1>TimeFlow</h1>
 
-    <div class="input-row">//输入区域，里面有输入框和按钮
-        <input type="text" id="titleInput" placeholder=" ">//文本输入框+Javascrip唯一标识+输入框未空时显示的提示词
-        <input type="datetime-local" id="plannedAtInput" title="计划开始时间">//浏览器自带时间+唯一标识+鼠标悬停时提示词
+    <div class="input-row">
+        <input type="text" id="titleInput" placeholder=" ">
+        <input type="datetime-local" id="plannedAtInput" title="计划开始时间">
         <input type="datetime-local" id="plannedEndInput" title="预计结束时间">
-        <button onclick="addTask()">添加</button>//按钮，点击时执行addTask函数
+        <button onclick="addTask()">添加</button>
     </div>
 
     <div id="taskList"></div>
